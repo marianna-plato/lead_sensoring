@@ -25,3 +25,6 @@ conda_env/
 .idea/
 .DS_Store
 EOF
+
+# Cloude
+agents/

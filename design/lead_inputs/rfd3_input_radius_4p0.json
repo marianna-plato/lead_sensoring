@@ -1,0 +1,16 @@
+{
+  "5gpe_pb_motif_r4": {
+    "dialect": 2,
+    "input": "/dtu/blackhole/00/222976/lead_sensoring/data/raw/5gpe.cif",
+    "contig": "80-140,/0,C72-84,/0,D107-128",
+    "length": "115-175",
+    "redesign_motif_sidechains": false,
+    "select_hotspots": {
+      "C78": "SG",
+      "D113": "SG",
+      "D122": "SG"
+    },
+    "infer_ori_strategy": "hotspots",
+    "is_non_loopy": true
+  }
+}
