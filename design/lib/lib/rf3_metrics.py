@@ -33,14 +33,18 @@ def gather_rf3_metrics(parent, binder, target_f, target_g, out_csv=None):
     Args:
         parent:   Directory containing RF3 output .score files (searched recursively)
         binder:   Chain ID for the binder, e.g. "A_1"
-        target_f: Chain ID for target F (primary target), e.g. "B_1"
-        target_g: Chain ID for target G (secondary target), e.g. "B_1"
+        target_f: Chain ID for target F (primary target), e.g. "B_1".
+                  Pass None or "" for single-chain mode (no interface metrics).
+        target_g: Chain ID for target G (secondary target), e.g. "C_1".
+                  Ignored in single-chain mode.
         out_csv:  Optional path to write the aggregated CSV
 
     Returns:
-        pd.DataFrame with one row per design
+        pd.DataFrame with one row per design. Interface columns (AF_*, AG_*) are
+        NaN in single-chain mode.
     """
     score_files = sorted(Path(parent).rglob("*.score"))
+    single_chain_mode = not target_f
 
     records = []
     for sf in score_files:
@@ -56,7 +60,30 @@ def gather_rf3_metrics(parent, binder, target_f, target_g, out_csv=None):
         chain_df = raw[raw["chain_chainwise"].notna()].copy()
         iface_df = raw[raw["chain_chainwise"].isna()].copy()
 
-        if chain_df.empty or iface_df.empty:
+        if chain_df.empty:
+            continue
+
+        if single_chain_mode:
+            # Pick batch_idx with highest binder pLDDT
+            binder_rows = chain_df[chain_df["chain_chainwise"] == binder].copy()
+            if binder_rows.empty:
+                continue
+            best_row = binder_rows.loc[binder_rows["chainwise_plddt"].idxmax()]
+            best_batch = best_row["batch_idx"]
+            best_binder_plddt = float(best_row["chainwise_plddt"])
+            records.append({
+                "design_id":         sf.stem,
+                "score_file":        str(sf),
+                "best_binder_plddt": best_binder_plddt,
+                "AF_best_min_pae":   float("nan"),
+                "AF_ipsae_at_best":  float("nan"),
+                "AG_best_min_pae":   float("nan"),
+                "AG_ipsae_at_best":  float("nan"),
+                "best_batch_idx":    int(best_batch),
+            })
+            continue
+
+        if iface_df.empty:
             continue
 
         # --- Find AF interface rows (binder ↔ target_f) ---
