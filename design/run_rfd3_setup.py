@@ -69,7 +69,7 @@ print("SpyTag     :", SPYTAG, f"({len(SPYTAG)} aa)")
 
 # ── Cell 7: build RFD3 input JSON ─────────────────────────────────────────────
 design_name = "5gpe_pb_motif_r4"
-input_pdb = str(STRUCTURE_CIF)
+input_pdb = str(LEAD_INPUTS / "rfd3_input_context.pdb")
 contig = "80-140,/0,C72-84,/0,D107-128"
 length = "115-175"
 redesign_motif_sidechains = False
