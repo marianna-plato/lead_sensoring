@@ -1,0 +1,9 @@
+{
+  "name": "lead_binder_DESIGNNAME",
+  "components": [
+    {
+      "seq": "BINDER_SEQUENCE_HERE",
+      "chain_id": "A"
+    }
+  ]
+}
