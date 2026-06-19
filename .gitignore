@@ -1,5 +1,10 @@
 # Generated outputs
-work/
+/work/
+design/work/*
+!design/work/exp_01/
+design/work/exp_01/*
+!design/work/exp_01/best_binders/
+!design/work/exp_01/best_binders/**
 logs/
 outputs/
 results/
@@ -24,7 +29,6 @@ conda_env/
 .vscode/
 .idea/
 .DS_Store
-EOF
 
 # Cloude
 agents/
