@@ -1,0 +1,12 @@
+{
+  "5gpe_pb_motif_r5": {
+    "dialect": 2,
+    "input": "/zhome/bf/7/219671/projects/lead_sensoring/data/raw/5gpe.cif",
+    "contig": "80-140,/0,C72-84,/0,D107-128",
+    "length": "115-175",
+    "redesign_motif_sidechains": false,
+    "select_hotspots": null,
+    "infer_ori_strategy": "center_of_mass",
+    "is_non_loopy": true
+  }
+}
